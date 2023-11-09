@@ -6,6 +6,7 @@ import {
   ConflictException,
   UsePipes,
 } from '@nestjs/common'
+import { User } from '@prisma/client'
 import { hashSync } from 'bcryptjs'
 import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -26,7 +27,7 @@ export class CreateAccountController {
   @Post()
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createAccountBodySchema)) // Aqui fazemos a validação com o pipe do Zod
-  async handle(@Body() body: TCreateAccountBodySchema) {
+  async handle(@Body() body: TCreateAccountBodySchema): Promise<User> {
     const { name, email, password } = body
 
     const userWithSameEmail = await this.prisma.user.findUnique({
