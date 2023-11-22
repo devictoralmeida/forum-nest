@@ -9,13 +9,13 @@ import { QuestionBestQuestionChosenEvent } from '../events/question-best-answer-
 
 export interface IQuestionProps {
   authorId: UniqueEntityID
-  bestAnswerId?: UniqueEntityID
+  bestAnswerId?: UniqueEntityID | null
   title: string
   slug: Slug
   content: string
   attachments: QuestionAttachmentList
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Question extends AggregateRoot<IQuestionProps> {
@@ -76,7 +76,7 @@ export class Question extends AggregateRoot<IQuestionProps> {
     this.touch()
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined) {
+  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined | null) {
     // Se existe o id da melhor resposta e ele é diferente do que já existe, ai sim que eu envio a notificação
 
     if (bestAnswerId && bestAnswerId !== this.props.bestAnswerId) {

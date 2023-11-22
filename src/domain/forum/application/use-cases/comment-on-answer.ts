@@ -4,6 +4,7 @@ import { AnswerCommentsRepository } from '../repositories/answer-comments-reposi
 import { AnswersRepository } from '../repositories/answers-repository'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { Injectable } from '@nestjs/common'
 
 interface ICommentOnAnswerUseCaseRequest {
   authorId: string
@@ -18,6 +19,7 @@ type TCommentOnAnswerUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class CommentOnAnswerUseCase {
   constructor(
     private answerRepository: AnswersRepository,
